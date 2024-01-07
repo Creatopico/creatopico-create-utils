@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "ru.littleligr.creatopico.create.utils.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "ContraptionMixin",
+    "DimensionalCarriageEntityMixin",
+    "RailwaySavedDataMixin",
+    "WorldSaveHandlerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+	}
+}

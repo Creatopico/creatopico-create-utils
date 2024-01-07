@@ -16,6 +16,16 @@ repositories {
 	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
+
+	maven { url = "https://maven.parchmentmc.org" } // Parchment mappings
+	maven { url = "https://maven.quiltmc.org/repository/release" } // Quilt Mappings
+	maven { url = "https://api.modrinth.com/maven" } // LazyDFU
+	maven { url = "https://maven.terraformersmc.com/releases/" } // Mod Menu
+	maven { url = "https://mvn.devos.one/snapshots/" } // Create, Porting Lib, Forge Tags, Milk Lib, Registrate
+	maven { url = "https://cursemaven.com" } // Forge Config API Port
+	maven { url = "https://maven.jamieswhiteshirt.com/libs-release" } // Reach Entity Attributes
+	maven { url = "https://jitpack.io/" } // Mixin Extras, Fabric ASM
+	maven { url = "https://maven.tterrag.com/" } // Flywheel
 }
 
 loom {
@@ -33,12 +43,25 @@ loom {
 dependencies {
 	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+	mappings loom.layered {
+		it.mappings("net.fabricmc:yarn:${yarn_mappings}:v2")
+		it.mappings file("mappings/createFix.tiny")
+	}
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-	
+	modImplementation("com.simibubi.create:create-fabric-${minecraft_version}:${create_version}")
+
+	implementation "redis.clients:jedis:${project.jedis}"
+	include "redis.clients:jedis:${project.jedis}"
+	include 'com.google.code.gson:gson:2.10.1'
+	include 'org.apache.commons:commons-pool2:2.12.0'
+	include 'org.json:json:20231013'
+	include 'org.slf4j:slf4j-api:2.0.9'
+
+	modImplementation "maven.modrinth:midnightlib:${project.midnightlib_version}"
+	include "maven.modrinth:midnightlib:${project.midnightlib_version}"
 	// Uncomment the following line to enable the deprecated Fabric API modules. 
 	// These are included in the Fabric API production distribution and allow you to update your mod to the latest modules at a later more convenient time.
 
